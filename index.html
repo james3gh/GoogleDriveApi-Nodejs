@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <h2>Welcome to Google drive API</h2>
+    <h3>Example for File uploading</h3>
+    <form>
+      <input type="file" name="Files" required multiple />
+      <input
+        type="text"
+        name="folderId"
+        placeholder="Folder Id to upload the files"
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+
+  <script>
+    const formElem = document.querySelector("form");
+    formElem.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        let response = await fetch("/api/v1/files/upload", {
+          method: "POST",
+          body: new FormData(formElem),
+        });
+        if (response.ok) {
+          alert("File uploaded successfully!");
+          formElem.reset();
+        } else {
+          throw new Error("Network response was not ok");
+        }
+      } catch (error) {
+        alert("There was an error uploading the file. Please try again later.");
+      }
+    });
+  </script>
+</html>
